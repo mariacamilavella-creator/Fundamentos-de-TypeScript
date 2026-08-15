@@ -125,3 +125,63 @@ if (laptop) {
 
 console.log("¿Hay stock para 3 laptops?", hasStock(products[0], 3));
 console.log("¿Hay stock para 10 laptops?", hasStock(products[0], 10));
+
+const selectedProduct = findProductById(products, 2);
+if (selectedProduct) {
+ console.log(selectedProduct.name);
+} else {
+ console.log("Producto no encontrado");
+}
+
+type Identifier = number | string;
+function printIdentifier(id: Identifier): void {
+ if (typeof id === "number") {
+ console.log(`ID numérico: ${id}`);
+ return;
+ }
+ console.log(`ID textual: ${id.toUpperCase()}`);
+}
+
+enum PaymentMethod {
+ CASH = "CASH",
+ CARD = "CARD",
+ TRANSFER = "TRANSFER"
+}
+
+interface Order {
+ id: number;
+ customer: Customer;
+ items: OrderItem[];
+ status: OrderStatus;
+ paymentMethod: PaymentMethod;
+ total: number;
+}
+
+interface ServiceResponse<T> {
+ success: boolean;
+ message: string;
+ data: T;
+}
+
+const productResponse: ServiceResponse<Product> = {
+ success: true,
+ message: "Producto encontrado",
+ data: products[0]!
+};
+const catalogResponse: ServiceResponse<Product[]> = {
+ success: true,
+ message: "Catálogo obtenido",
+ data: products
+};
+
+function getFirstItem<T>(items: T[]): T | undefined {
+ return items[0];
+}
+const firstProduct = getFirstItem(products);
+
+printIdentifier(42);
+printIdentifier("abc123");
+
+console.log("Respuesta de producto:", productResponse);
+console.log("Respuesta de catálogo:", catalogResponse);
+console.log("Primer producto (genérico):", firstProduct);
